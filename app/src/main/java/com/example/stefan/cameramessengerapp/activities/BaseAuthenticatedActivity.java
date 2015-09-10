@@ -16,7 +16,7 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity {
             return;
         }
 
-        onAuthCreate(savedState);
+        onCreateAuth(savedState);
     }
 
     /**
@@ -25,6 +25,6 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity {
      * But if user is then not logged in then no point in sub classes running onCreate (waste of initializations)
      * Thus, here we prevent subclasses from overriding onCreate and instead only let them implement onAuthCreate which will only be run if authenticated.
      */
-    protected abstract void onAuthCreate(Bundle savedState);
+    protected abstract void onCreateAuth(Bundle savedState);
 
 }

@@ -7,4 +7,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_activity_login_narrow">activity_login_narrow</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_external_login">ExternalLoginActivity</string>
 </resources>

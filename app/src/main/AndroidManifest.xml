@@ -14,7 +14,7 @@
         </activity>
         <activity
             android:name=".activities.LoginNarrowActivity"
-            android:label="LoginNarrowActivity"/>
+            android:label="LoginNarrowActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main" >
@@ -23,6 +23,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:label="@string/title_activity_register" >
+        </activity>
+        <activity
+            android:name=".activities.ExternalLoginActivity"
+            android:label="@string/title_activity_external_login" >
         </activity>
     </application>
 
