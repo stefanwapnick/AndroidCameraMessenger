@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include_login_header"
+        layout="@layout/include_login_header"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/include_login_header">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="#dddddd"
+            android:layout_marginBottom="8dp">
+
+            <fragment
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:name="com.example.stefan.cameramessengerapp.fragments.LoginFragment"
+                android:id="@+id/activity_login_fragment"
+                tools:layout="@layout/fragment_login"/>
+        </FrameLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_login_registerButton"
+            style="@style/PrimaryButtonTheme"
+            android:text="Register" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                style="@style/PrimaryButtonTheme"
+                android:text="Facebook Log in"
+                android:id="@+id/activity_login_facebookLogin"/>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/PrimaryButtonTheme"
+                android:layout_marginStart ="4dp"
+                android:text="Google Log in"
+                android:id="@+id/activity_login_googleLogin"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

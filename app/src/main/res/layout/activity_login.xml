@@ -5,32 +5,46 @@
     android:layout_height="match_parent"
     tools:context="com.example.stefan.cameramessengerapp.activities.LoginActivity">
 
+    <include
+        layout="@layout/include_login_header"
+        android:id="@+id/include_login_header"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
-        <EditText
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:layout_below="@id/include_login_header">
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_login_email"
-            android:hint="Email"
-            android:inputType="textEmailAddress"/>
-        <EditText
+            style="@style/PrimaryButtonTheme"
+            android:id="@+id/activity_login_loginButton"
+            android:text="Login"/>
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_login_password"
-            android:inputType="textPassword"
-            android:hint="Password"/>
+            style="@style/PrimaryButtonTheme"
+            android:id="@+id/activity_login_registerButton"
+            android:text="Register"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/PrimaryButtonTheme"
+            android:id="@+id/activity_login_facebookLogin"
+            android:text="Facebook Login"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/PrimaryButtonTheme"
+            android:id="@+id/activity_login_googleLogin"
+            android:text="Google Login"/>
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_login_loginButton"
-        android:text="Login"
-        android:layout_alignParentBottom="true"/>
+
+
+
 
 </RelativeLayout>
