@@ -115,7 +115,13 @@ public class NavDrawer {
                 throw new RuntimeException("Nav drawer item " + text + " could not be attached to ViewGroup. View not found");
             }
 
-            view = inflater.inflate(R.layout.list_item_nav_drawer, container);
+            view = inflater.inflate(R.layout.list_item_nav_drawer, container, false);
+
+            // Attach view to root
+            container.addView(view);
+            // Register on-click listener
+            view.setOnClickListener(this);
+
             icon = (ImageView)view.findViewById(R.id.list_item_nav_drawer_icon);
             textView = (TextView)view.findViewById(R.id.list_item_nav_drawer_text);
             badgeTextView = (TextView)view.findViewById(R.id.list_item_nav_drawer_badge);
@@ -130,8 +136,6 @@ public class NavDrawer {
                 badgeTextView.setVisibility(View.GONE);
             }
 
-            // Register on-click listener
-            view.setOnClickListener(this);
         }
 
         @Override

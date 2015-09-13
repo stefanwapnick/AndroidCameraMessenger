@@ -24,6 +24,7 @@
             android:contentDescription="AvatarIcon"/>
 
         <TextView
+            android:id="@+id/include_main_nav_drawer_displayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/include_main_nav_drawer_avatar"

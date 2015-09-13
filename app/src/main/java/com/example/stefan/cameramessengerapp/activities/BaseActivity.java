@@ -1,5 +1,6 @@
 package com.example.stefan.cameramessengerapp.activities;
 
+import android.app.Application;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,5 +47,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public Toolbar getToolbar(){
         return this.toolbar;
+    }
+
+    public CameraMessengerApplication getCameraMessengerApplication(){
+        return this.application;
     }
 }

@@ -32,6 +32,9 @@
             android:name=".activities.ExternalLoginActivity"
             android:label="@string/title_activity_external_login" >
         </activity>
+        <activity android:name=".activities.ContactsActivity"/>
+        <activity android:name=".activities.ProfileActivity"/>
+        <activity android:name=".activities.SentMessagesActivity"/>
     </application>
 
 </manifest>
