@@ -208,9 +208,16 @@ public class NavDrawer {
 
             super.onClick(view);
 
-            // TODO: animations
-            navDrawer.activity.startActivity(new Intent(navDrawer.activity, targetActivity));
-            navDrawer.activity.finish();
+            navDrawer.activity.fadeOut(new BaseActivity.FadeOutListener() {
+
+                // Only transition to target activity once callback done
+                @Override
+                public void onFadeOutEnd() {
+                    navDrawer.activity.startActivity(new Intent(navDrawer.activity, targetActivity));
+                    navDrawer.activity.finish();
+                }
+            });
+
         }
 
     }

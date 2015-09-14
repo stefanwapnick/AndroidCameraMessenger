@@ -1,10 +1,12 @@
 package com.example.stefan.cameramessengerapp.activities;
 
+import android.animation.Animator;
 import android.app.Application;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.stefan.cameramessengerapp.R;
 import com.example.stefan.cameramessengerapp.infrastructure.CameraMessengerApplication;
@@ -43,6 +45,12 @@ public class BaseActivity extends AppCompatActivity {
     protected void setNavDrawer(NavDrawer navDrawer){
         this.navDrawer = navDrawer;
         this.navDrawer.create();
+
+        // Disable default activity animations for activities that have a nav drawer
+        overridePendingTransition(0,0);
+        View rootView = findViewById(android.R.id.content);
+        rootView.setAlpha(0);
+        rootView.animate().alpha(1).setDuration(350).start();
     }
 
     public Toolbar getToolbar(){
@@ -52,4 +60,38 @@ public class BaseActivity extends AppCompatActivity {
     public CameraMessengerApplication getCameraMessengerApplication(){
         return this.application;
     }
+
+    public void fadeOut(final FadeOutListener listener){
+
+        // android.R contains resources and such from actual SDK
+        // content = entirely of window frame
+        View rootView = findViewById(android.R.id.content);
+        rootView.animate().alpha(0).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                listener.onFadeOutEnd();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).setDuration(350).start();
+    }
+
+    // Interface to implement callback method in android
+    public interface FadeOutListener{
+        void onFadeOutEnd();
+    }
+
 }
