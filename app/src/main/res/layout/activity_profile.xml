@@ -8,13 +8,73 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include layout="@layout/include_toolbar"/>
-        <TextView
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile"/>
+            android:padding="@dimen/activity_all_padding">
+
+            
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:id="@+id/activity_profile_avatar"
+                android:background="#cccccc"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#aa000000"
+                android:layout_alignTop="@id/activity_profile_avatar"
+                android:layout_alignStart="@id/activity_profile_avatar"
+                android:layout_alignEnd="@id/activity_profile_avatar"
+                android:layout_alignBottom="@id/activity_profile_avatar"
+                android:id="@+id/activity_profile_avatarProgressFrame"
+                android:clickable="true">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateOnly="true"/>
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap To Change"
+                android:textColor="@android:color/white"
+                android:background="@color/color_primary"
+                android:padding="10dp"
+                android:layout_below="@id/activity_profile_avatar"
+                android:layout_alignEnd="@id/activity_profile_avatar"
+                android:layout_alignStart="@id/activity_profile_avatar"
+                android:gravity="center_horizontal"
+                android:id="@+id/activity_profile_changeAvatar"
+                />
+
+            <EditText
+                android:id="@+id/activity_profile_displayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Display Name"
+                android:layout_below="@id/activity_profile_changeAvatar"
+                android:layout_marginTop="20dp"/>
+
+            <EditText
+                android:id="@+id/activity_profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:layout_below="@id/activity_profile_displayName"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
     <include layout="@layout/include_main_nav_drawer"/>
