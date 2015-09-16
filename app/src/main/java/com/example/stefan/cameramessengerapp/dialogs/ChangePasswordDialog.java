@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -58,13 +59,17 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
                 currentPassword.getText().toString(),
                 newPassword.getText().toString(),
                 connfirmNewPassword.getText().toString()));
+
     }
 
     @Subscribe
     public void onPasswordChanged(Account.ChangePasswordResponse response){
 
+        progressDialog.dismiss();
+        progressDialog = null;
+
         if(response.isSuccess()){
-            Toast.makeText(getActivity(), "Passowrd Updated", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Password Updated", Toast.LENGTH_LONG).show();
             dismiss();
             application.getAuth().getUser().setHasPassword(true);
             return;

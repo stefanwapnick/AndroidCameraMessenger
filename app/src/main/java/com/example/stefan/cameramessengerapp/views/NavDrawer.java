@@ -45,6 +45,12 @@ public class NavDrawer {
                 setOpen(!isOpen());
             }
         });
+
+        activity.getCameraMessengerApplication().getBus().register(this);
+    }
+
+    public void destroy(){
+        activity.getCameraMessengerApplication().getBus().unregister(this);
     }
 
     public void addItem(NavDrawerItem item){

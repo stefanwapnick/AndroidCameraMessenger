@@ -11,6 +11,8 @@ import com.example.stefan.cameramessengerapp.activities.MainActivity;
 import com.example.stefan.cameramessengerapp.activities.ProfileActivity;
 import com.example.stefan.cameramessengerapp.activities.SentMessagesActivity;
 import com.example.stefan.cameramessengerapp.infrastructure.User;
+import com.example.stefan.cameramessengerapp.services.Account;
+import com.squareup.otto.Subscribe;
 
 public class MainNavDrawer extends NavDrawer{
 
@@ -31,7 +33,7 @@ public class MainNavDrawer extends NavDrawer{
 
             @Override
             public void onClick(View view){
-                Toast.makeText(activity, "You have logged out!", Toast.LENGTH_SHORT).show();
+                activity.getCameraMessengerApplication().getAuth().logout();
             }
         });
 
@@ -43,4 +45,10 @@ public class MainNavDrawer extends NavDrawer{
 
         // TODO: Set avatar image
     }
+
+    @Subscribe
+    public void onUserDetailsUpdate(Account.UserDetailsUpdateEvent response){
+        displayNameText.setText(response.User.getDisplayName());
+    }
+
 }

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -199,6 +200,12 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         setProgressBarVisible(false);
     }
 
+    @Subscribe
+    public void onUserDetailsUpdated(Account.UserDetailsUpdateEvent response){
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setTitle(response.User.getDisplayName());
+    }
+
     private void setProgressBarVisible(boolean isVisible){
 
         if(isVisible){
@@ -290,7 +297,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
                         displayNameEdit.getText().toString(),
                         emailEdit.getText().toString()));
 
-                changeState(STATE_VIEWING);
                 return true;
             }
             return false;
@@ -303,6 +309,13 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             }
         }
     }
+
+    @Subscribe
+    public void onUserDetailsChanged(Account.UserDetailsUpdateEvent response){
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setTitle(response.User.getUserName());
+    }
+
 
 
 }

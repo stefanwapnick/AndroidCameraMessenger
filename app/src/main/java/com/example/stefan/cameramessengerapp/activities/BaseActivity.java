@@ -20,7 +20,6 @@ public class BaseActivity extends AppCompatActivity {
     protected NavDrawer navDrawer;
     protected Bus bus;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +34,9 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy(){
         super.onDestroy();
         bus.unregister(this);
+
+        if(navDrawer != null)
+            navDrawer.destroy();
     }
 
     @Override

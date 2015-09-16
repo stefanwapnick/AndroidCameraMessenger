@@ -10,11 +10,23 @@ public abstract class BaseAuthenticatedActivity extends BaseActivity {
         super.onCreate(savedState);
 
         // If not logged in, shoot user to Log In activity
+        //-----------------------------------------------------------
         if(!application.getAuth().getUser().isLoggedIn()){
-            startActivity(new Intent(this, LoginActivity.class));
+
+            if(!application.getAuth().hasAuthToken()){
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.putExtra(AuthenticationActivity.EXTRA_RETURN_TO_ACTIVITY, getClass().getName());
+                startActivity(intent);
+            }else{
+                startActivity(new Intent(this, LoginActivity.class));
+            }
+
             finish();
             return;
         }
+        // Else user logged in
+        //-----------------------------------------------------------
+
 
         onCreateAuth(savedState);
     }

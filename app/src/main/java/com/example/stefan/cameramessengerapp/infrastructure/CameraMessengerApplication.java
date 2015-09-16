@@ -2,6 +2,7 @@ package com.example.stefan.cameramessengerapp.infrastructure;
 
 import android.app.Application;
 
+import com.example.stefan.cameramessengerapp.services.Module;
 import com.squareup.otto.Bus;
 
 public class CameraMessengerApplication extends Application {
@@ -17,6 +18,7 @@ public class CameraMessengerApplication extends Application {
     public void onCreate() {
         super.onCreate();
         auth = new Auth(this);
+        Module.register(this);
     }
 
     public Auth getAuth() {
