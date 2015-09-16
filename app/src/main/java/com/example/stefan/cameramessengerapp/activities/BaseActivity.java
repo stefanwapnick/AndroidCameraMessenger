@@ -11,18 +11,30 @@ import android.view.View;
 import com.example.stefan.cameramessengerapp.R;
 import com.example.stefan.cameramessengerapp.infrastructure.CameraMessengerApplication;
 import com.example.stefan.cameramessengerapp.views.NavDrawer;
+import com.squareup.otto.Bus;
 
 public class BaseActivity extends AppCompatActivity {
 
     protected CameraMessengerApplication application;
     protected Toolbar toolbar;
     protected NavDrawer navDrawer;
+    protected Bus bus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         application = (CameraMessengerApplication)getApplication();
+        bus = application.getBus();
+
+        bus.register(this);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        bus.unregister(this);
     }
 
     @Override

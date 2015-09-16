@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:hint="Password"
         android:id="@+id/fragment_login_password"
         android:layout_below="@id/fragment_login_userName"
         style="@style/PrimaryViewTheme"/>

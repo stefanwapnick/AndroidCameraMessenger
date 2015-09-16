@@ -17,10 +17,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors{
+        inmemory{
+            applicationId "com.example.stefan.cameramessengerapp.inmemory"
+        }
+
+        live{
+            applicationId "com.example.stefan.cameramessengerapp"
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.soundcloud.android:android-crop:0.9.10@aar'
+    compile 'com.squareup:otto:1.3.6'
 }

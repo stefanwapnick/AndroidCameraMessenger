@@ -2,21 +2,23 @@ package com.example.stefan.cameramessengerapp.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.stefan.cameramessengerapp.R;
+import com.example.stefan.cameramessengerapp.services.Account;
+import com.squareup.otto.Subscribe;
 
-/**
- * Created by Stefan on 2015-09-13.
- */
 public class ChangePasswordDialog extends BaseDialogFragment implements View.OnClickListener {
 
     private EditText currentPassword;
     private EditText newPassword;
     private EditText connfirmNewPassword;
+    private Dialog progressDialog;
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedState){
@@ -46,8 +48,30 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
 
     @Override
     public void onClick(View v) {
-        // TODO: Send new password to server
-        Toast.makeText(getActivity(), "Password updated", Toast.LENGTH_SHORT).show();
-        dismiss();  // dismiss this dialog fragment
+
+        progressDialog = new ProgressDialog.Builder(getActivity())
+                .setTitle("Changing Password")
+                .setCancelable(false)
+                .show();
+
+        bus.post(new Account.ChangePasswordRequest(
+                currentPassword.getText().toString(),
+                newPassword.getText().toString(),
+                connfirmNewPassword.getText().toString()));
+    }
+
+    @Subscribe
+    public void onPasswordChanged(Account.ChangePasswordResponse response){
+
+        if(response.isSuccess()){
+            Toast.makeText(getActivity(), "Passowrd Updated", Toast.LENGTH_LONG).show();
+            dismiss();
+            application.getAuth().getUser().setHasPassword(true);
+            return;
+        }
+
+        currentPassword.setError(response.getPropertyError("currentPassword"));
+        newPassword.setError(response.getPropertyError("newPassword"));
+        connfirmNewPassword.setError(response.getPropertyError("confirmNewPassword"));
     }
 }

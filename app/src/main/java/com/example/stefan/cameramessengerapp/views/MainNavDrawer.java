@@ -6,7 +6,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.stefan.cameramessengerapp.R;
 import com.example.stefan.cameramessengerapp.activities.BaseActivity;
+import com.example.stefan.cameramessengerapp.activities.ContactsActivity;
 import com.example.stefan.cameramessengerapp.activities.MainActivity;
+import com.example.stefan.cameramessengerapp.activities.ProfileActivity;
+import com.example.stefan.cameramessengerapp.activities.SentMessagesActivity;
 import com.example.stefan.cameramessengerapp.infrastructure.User;
 
 public class MainNavDrawer extends NavDrawer{
@@ -19,9 +22,9 @@ public class MainNavDrawer extends NavDrawer{
         super(activity);
 
         addItem(new ActivityNavDrawerItem(MainActivity.class, "Inbox", null, R.drawable.ic_action_unread, R.id.include_main_nav_drawer_topItems));
-        addItem(new ActivityNavDrawerItem(MainActivity.class, "Contacts", null, R.drawable.ic_action_send_now, R.id.include_main_nav_drawer_topItems));
-        addItem(new ActivityNavDrawerItem(MainActivity.class, "Contacts", null, R.drawable.ic_action_group, R.id.include_main_nav_drawer_topItems));
-        addItem(new ActivityNavDrawerItem(MainActivity.class, "Profile", null, R.drawable.ic_action_person, R.id.include_main_nav_drawer_topItems));
+        addItem(new ActivityNavDrawerItem(SentMessagesActivity.class, "Sent Messages", null, R.drawable.ic_action_send_now, R.id.include_main_nav_drawer_topItems));
+        addItem(new ActivityNavDrawerItem(ContactsActivity.class, "Contacts", null, R.drawable.ic_action_group, R.id.include_main_nav_drawer_topItems));
+        addItem(new ActivityNavDrawerItem(ProfileActivity.class, "Profile", null, R.drawable.ic_action_person, R.id.include_main_nav_drawer_topItems));
 
 
         addItem(new BasicNavDrawerItem("Logout", null, R.drawable.ic_action_backspace, R.id.include_main_nav_drawer_bottomItems){

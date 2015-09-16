@@ -1,6 +1,8 @@
 package com.example.stefan.cameramessengerapp.activities;
 
+import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -19,8 +21,11 @@ import android.widget.ImageView;
 import com.example.stefan.cameramessengerapp.R;
 import com.example.stefan.cameramessengerapp.dialogs.ChangePasswordDialog;
 import com.example.stefan.cameramessengerapp.infrastructure.User;
+import com.example.stefan.cameramessengerapp.services.Account;
+import com.example.stefan.cameramessengerapp.views.MainNavDrawer;
 import com.example.stefan.cameramessengerapp.views.NavDrawer;
 import com.soundcloud.android.crop.Crop;
+import com.squareup.otto.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,25 +34,26 @@ import java.util.List;
 public class ProfileActivity extends BaseAuthenticatedActivity implements View.OnClickListener{
 
     private static final int REQUEST_SELECT_IMAGE = 100;
-
     private static final int STATE_VIEWING = 1;
     private static final int STATE_EDITING = 2;
     private static final String BUNDLE_STATE = "BUNDLE_STATE";
+    private static boolean isProgressBarVisible;
+
     private int currentState;
     private ActionMode editProfileActionMode;
 
     private EditText displayNameEdit;
     private EditText emailEdit;
-
     private View changeAvatarButton;
     private ImageView avatarView;
     private View avatarProgressFrame;       // Used for temporary storage of pictures taken by phone for profile image
     private File tempOutputFile;
+    private Dialog progressDialog;
 
     @Override
     protected void onCreateAuth(Bundle savedState) {
         setContentView(R.layout.activity_profile);
-        setNavDrawer(new NavDrawer(this));
+        setNavDrawer(new MainNavDrawer(this));
 
         avatarView = (ImageView)findViewById(R.id.activity_profile_avatar);
         avatarProgressFrame = findViewById(R.id.activity_profile_avatarProgressFrame);
@@ -75,6 +81,8 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }else{
             changeState(savedState.getInt(BUNDLE_STATE));
         }
+
+        setProgressBarVisible(isProgressBarVisible);
     }
 
     // Save current state on screen rotation
@@ -157,12 +165,55 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         // Cropping Image activity return
         //-----------------------------------------
         }else if (requestCode == Crop.REQUEST_CROP){
-            //TODO: Send tempFIleUri to server as new avatar
+
+            // Call Service layer to upload picture
+            avatarProgressFrame.setVisibility(View.VISIBLE);
+            bus.post(new Account.ChangeAvatarRequest(Uri.fromFile(tempOutputFile)));
+
+            /*
             avatarView.setImageResource(0);         // set image resource to 0 first to make smooth transition to new image when setting ImageView
-            avatarView.setImageURI(Uri.fromFile(tempOutputFile));
+            avatarView.setImageURI(Uri.fromFile(tempOutputFile));   */
+        }
+    }
+
+    // RETURN FROM SERVICE LAYER
+    @Subscribe
+    public void onAvatarUpdated(Account.ChangeAvatarResponse response){
+        avatarProgressFrame.setVisibility(View.GONE);
+
+        if(!response.isSuccess()){
+            response.showErrorToast(this);
+        }
+    }
+
+    @Subscribe
+    public void onProfileUpdate(Account.UpdateProfileResponse response){
+
+        if(!response.isSuccess()){
+            response.showErrorToast(this);
+            changeState(STATE_EDITING);
         }
 
+        displayNameEdit.setError(response.getPropertyError("displayName"));
+        emailEdit.setError(response.getPropertyError("email"));
+        setProgressBarVisible(false);
     }
+
+    private void setProgressBarVisible(boolean isVisible){
+
+        if(isVisible){
+            progressDialog = new ProgressDialog.Builder(this)
+                        .setTitle("Updating Profile")
+                        .setCancelable(false)
+                        .show();
+        }else if (progressDialog != null){
+                progressDialog.dismiss();
+                progressDialog = null;
+        }
+
+        isProgressBarVisible = isVisible;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -231,10 +282,13 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             int itemId = item.getItemId();
 
             if(itemId == R.id.activity_profile_edit_menuDone){
-                // TODO: Send request to update display name and email
-                User user = application.getAuth().getUser();
-                user.setDisplayName(displayNameEdit.getText().toString());
-                user.setEmail(emailEdit.getText().toString());
+
+                setProgressBarVisible(true);
+                changeState(STATE_VIEWING);
+
+                bus.post(new Account.UpdateProfileRequest(
+                        displayNameEdit.getText().toString(),
+                        emailEdit.getText().toString()));
 
                 changeState(STATE_VIEWING);
                 return true;
