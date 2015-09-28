@@ -1,8 +1,10 @@
-package com.example.stefan.cameramessengerapp.infrastructure;
+package com.example.stefan.cameramessengerapp.services;
 
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
@@ -14,9 +16,11 @@ public abstract class ServiceResponse {
     private static final String TAG = "ServiceResponse";
 
     // Error on operation wide scale (ex: improper format image)
+    @SerializedName("operationError")
     private String operationError;
 
     // Validation error per property (email too long, etc)
+    @SerializedName("propertyErrors")
     private HashMap<String, String > propertyErrors;
 
     // Indicates if operationError is critical (API is down, code contains a bug)
@@ -50,6 +54,11 @@ public abstract class ServiceResponse {
     public void setPropertyError(String property, String error){
         this.propertyErrors.put(property, error);
     }
+    public void setCriticalError(String criticalError){
+        this.operationError = criticalError;
+        isCritical = true;
+    }
+
     public String getPropertyError(String property){
         return this.propertyErrors.get(property);
     }
@@ -69,7 +78,5 @@ public abstract class ServiceResponse {
         }
 
     }
-
-
 
 }

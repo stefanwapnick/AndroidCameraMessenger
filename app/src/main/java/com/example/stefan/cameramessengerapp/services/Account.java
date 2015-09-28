@@ -1,9 +1,7 @@
 package com.example.stefan.cameramessengerapp.services;
 
-import android.app.Service;
 import android.net.Uri;
 
-import com.example.stefan.cameramessengerapp.infrastructure.ServiceResponse;
 import com.example.stefan.cameramessengerapp.infrastructure.User;
 
 /**
@@ -24,6 +22,7 @@ public final class Account{
     }
 
     public static class ChangeAvatarResponse extends ServiceResponse{
+        public String AvatarUrl;
     }
 
     public static class UpdateProfileRequest{
@@ -38,6 +37,8 @@ public final class Account{
     }
 
     public static class UpdateProfileResponse extends ServiceResponse{
+        public String DisplayName;
+        public String Email;
     }
 
     public static class ChangePasswordRequest{

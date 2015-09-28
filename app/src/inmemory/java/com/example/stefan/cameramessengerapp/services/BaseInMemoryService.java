@@ -41,7 +41,6 @@ public abstract class BaseInMemoryService {
         }, msMin, msMax);
 
     }
-
     protected void postDelayed(Object event, long ms){
         postDelayed(event, ms, ms);
     }
